@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Controle de Estoque</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Página de Login -->
+    <div id="loginSection">
+        <h2>Login</h2>
+        <input type="text" id="adminUsername" placeholder="Usuário">
+        <input type="password" id="adminPassword" placeholder="Senha">
+        <button onclick="login()">Entrar</button>
+    </div>
+
+    <!-- Página Principal (Aparece após o login) -->
+    <div id="mainSection" style="display:none;">
+        <h1>Controle de Estoque</h1>
+
+        <!-- Seção para cadastro de produtos -->
+        <div id="productSection">
+            <h2>Cadastrar Produto</h2>
+            <input type="text" id="productName" placeholder="Nome do Produto">
+            <input type="number" id="productQuantity" placeholder="Quantidade">
+            <input type="date" id="productDate">
+            <button onclick="addProduct()">Adicionar Produto</button>
+        </div>
+
+        <!-- Seção para cadastro de pessoas -->
+        <div id="peopleSection">
+            <h2>Cadastrar Pessoa</h2>
+            <input type="text" id="personName" placeholder="Nome">
+            <button onclick="addPerson()">Adicionar Pessoa</button>
+        </div>
+
+        <!-- Seção para registrar retirada de produtos -->
+        <div id="withdrawSection">
+            <h2>Registrar Retirada</h2>
+            <select id="productList"></select>
+            <select id="personList"></select>
+            <input type="number" id="withdrawQuantity" placeholder="Quantidade Retirada">
+            <button onclick="registerWithdraw()">Registrar Retirada</button>
+        </div>
+
+        <!-- Botão para exportar para Excel -->
+        <button onclick="exportToExcel()">Exportar para Excel</button>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

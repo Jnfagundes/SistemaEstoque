@@ -1,0 +1,18 @@
+/* styles.css */
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+}
+
+h2 {
+    color: #333;
+}
+
+input, select, button {
+    display: block;
+    margin-top: 10px;
+}
+
+#loginSection, #mainSection {
+    margin: 20px 0;
+}
