@@ -16,6 +16,9 @@ header{
 h1, h2 {
     color: #9b9494;
 }
+h3{
+    color: #9b9494;
+}
 img{
     margin-right: 100px;
 }
@@ -43,6 +46,17 @@ input, select, button {
     background-color: rgb(34, 36, 34);
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+#productTable{
+    color: #9b9494;
+    padding: 10px;
+    border: solid 1px wheat;
+}
+
+th{
+    border: solid 1px wheat;
+    margin: 5px;
 }
 
 button {

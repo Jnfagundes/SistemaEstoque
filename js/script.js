@@ -33,14 +33,15 @@ function addProduct() {
     const code = document.getElementById("productCode").value;
     const name = document.getElementById("productName").value;
     const quantity = document.getElementById("productQuantity").value;
+    const descricao = document.getElementById("descricaoProduto").value;
     const date = document.getElementById("productDate").value;
 
-    if (code && name && quantity && date) {
+    if (code && name && quantity && descricao && date) {
         const products = getLocalStorageData('products') || [];
-        products.push({ code, name, quantity: parseInt(quantity), date });
+        products.push({ code, name, quantity: parseInt(quantity), descricao, date });
         setLocalStorageData('products', products);
         alert("Produto adicionado com sucesso!");
-        clearInputFields(['productCode', 'productName', 'productQuantity', 'productDate']);
+        clearInputFields(['productCode', 'productName', 'productQuantity', 'descricaoProduto','productDate']);
         updateProductTable(); // Atualiza a tabela de produtos após adicionar
     } else {
         alert("Preencha todos os campos para adicionar um produto.");
@@ -58,7 +59,8 @@ function updateProductTable() {
         row.insertCell(0).innerText = product.code;
         row.insertCell(1).innerText = product.name;
         row.insertCell(2).innerText = product.quantity;
-        row.insertCell(3).innerText = product.date;
+        row.insertCell(3).innerText = product.descricao;
+        row.insertCell(4).innerText = product.date;
     });
 }
 
