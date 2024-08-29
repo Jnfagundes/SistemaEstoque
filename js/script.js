@@ -2,7 +2,7 @@
 
 // Mock login para demonstração
 const adminUser = {
-    username: "admin",
+    username: "djrc",
     password: "1234"
 };
 
@@ -32,6 +32,7 @@ function addProduct() {
         setLocalStorageData('products', products);
         updateProductList();
         alert("Produto adicionado com sucesso!");
+        clearInputFields(['productName', 'productQuantity', 'productDate']);
     } else {
         alert("Preencha todos os campos para adicionar um produto.");
     }
@@ -59,6 +60,7 @@ function addPerson() {
         setLocalStorageData('people', people);
         updatePersonList();
         alert("Pessoa adicionada com sucesso!");
+        clearInputFields(['personName']);
     } else {
         alert("Preencha o nome para adicionar uma pessoa.");
     }
@@ -89,6 +91,7 @@ function registerWithdraw() {
         withdrawals.push({ product, person, quantity: parseInt(quantity), date });
         setLocalStorageData('withdrawals', withdrawals);
         alert("Retirada registrada com sucesso!");
+        clearInputFields(['withdrawQuantity']);
     } else {
         alert("Preencha todos os campos para registrar a retirada.");
     }
@@ -128,6 +131,11 @@ function getLocalStorageData(key) {
 // Função para salvar dados no localStorage
 function setLocalStorageData(key, data) {
     localStorage.setItem(key, JSON.stringify(data));
+}
+
+// Função para limpar campos de entrada
+function clearInputFields(fields) {
+    fields.forEach(field => document.getElementById(field).value = '');
 }
 
 // Carregar dados do localStorage ao carregar a página

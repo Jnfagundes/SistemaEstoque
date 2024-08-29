@@ -2,17 +2,44 @@
 body {
     font-family: Arial, sans-serif;
     margin: 20px;
-}
+    background-color: rgb(34, 36, 34);
+    display: flex;
+    flex-direction: column;
 
-h2 {
+}
+header{
+    width: 99%;
+    height: 200px;
+    margin-bottom: 50px;
+}
+h1, h2 {
     color: #333;
 }
 
 input, select, button {
     display: block;
     margin-top: 10px;
+    padding: 10px;
+    font-size: 16px;
 }
 
 #loginSection, #mainSection {
-    margin: 20px 0;
+    width: 300px;
+    margin: auto;
+    padding: 20px;
+    background-color: rgb(34, 36, 34);
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #45a049;
 }
