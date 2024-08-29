@@ -11,9 +11,13 @@ header{
     width: 99%;
     height: 200px;
     margin-bottom: 50px;
+    display: flex;
 }
 h1, h2 {
-    color: #333;
+    color: #9b9494;
+}
+img{
+    margin-right: 100px;
 }
 
 input, select, button {
@@ -23,8 +27,17 @@ input, select, button {
     font-size: 16px;
 }
 
-#loginSection, #mainSection {
+#loginSection {
     width: 300px;
+    margin: auto;
+    padding: 20px;
+    background-color: rgb(34, 36, 34);
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+#mainSection {
+    width: 800px;
     margin: auto;
     padding: 20px;
     background-color: rgb(34, 36, 34);

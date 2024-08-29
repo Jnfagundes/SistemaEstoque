@@ -20,35 +20,69 @@ function login() {
     }
 }
 
+// Função para alternar entre as seções
+function showSection(sectionId) {
+    document.querySelectorAll('.section').forEach(section => {
+        section.style.display = 'none';
+    });
+    document.getElementById(sectionId).style.display = 'block';
+}
+
 // Função para adicionar produto
 function addProduct() {
+    const code = document.getElementById("productCode").value;
     const name = document.getElementById("productName").value;
     const quantity = document.getElementById("productQuantity").value;
     const date = document.getElementById("productDate").value;
 
-    if (name && quantity && date) {
+    if (code && name && quantity && date) {
         const products = getLocalStorageData('products') || [];
-        products.push({ name, quantity: parseInt(quantity), date });
+        products.push({ code, name, quantity: parseInt(quantity), date });
         setLocalStorageData('products', products);
-        updateProductList();
         alert("Produto adicionado com sucesso!");
-        clearInputFields(['productName', 'productQuantity', 'productDate']);
+        clearInputFields(['productCode', 'productName', 'productQuantity', 'productDate']);
+        updateProductTable(); // Atualiza a tabela de produtos após adicionar
     } else {
         alert("Preencha todos os campos para adicionar um produto.");
     }
 }
 
-// Atualiza a lista de produtos no dropdown
-function updateProductList() {
+// Função para exibir produtos na tabela
+function updateProductTable() {
     const products = getLocalStorageData('products') || [];
-    const productList = document.getElementById("productList");
-    productList.innerHTML = "";
+    const productTableBody = document.getElementById("productTable").getElementsByTagName('tbody')[0];
+    productTableBody.innerHTML = ''; // Limpa a tabela
+
     products.forEach(product => {
-        const option = document.createElement("option");
-        option.value = product.name;
-        option.text = product.name;
-        productList.add(option);
+        const row = productTableBody.insertRow();
+        row.insertCell(0).innerText = product.code;
+        row.insertCell(1).innerText = product.name;
+        row.insertCell(2).innerText = product.quantity;
+        row.insertCell(3).innerText = product.date;
     });
+}
+
+// Função para buscar produto
+function searchProduct() {
+    const searchQuery = document.getElementById("searchProduct").value.toLowerCase();
+    const products = getLocalStorageData('products') || [];
+    const results = products.filter(product =>
+        product.name.toLowerCase().includes(searchQuery) ||
+        product.code.toLowerCase().includes(searchQuery)
+    );
+
+    const searchResultsDiv = document.getElementById("searchResults");
+    searchResultsDiv.innerHTML = '';
+
+    if (results.length > 0) {
+        results.forEach(product => {
+            const div = document.createElement('div');
+            div.innerText = `Código: ${product.code}, Nome: ${product.name}, Quantidade: ${product.quantity}`;
+            searchResultsDiv.appendChild(div);
+        });
+    } else {
+        searchResultsDiv.innerText = 'Nenhum produto encontrado.';
+    }
 }
 
 // Função para adicionar pessoa
@@ -79,64 +113,92 @@ function updatePersonList() {
     });
 }
 
-// Função para registrar retirada
-function registerWithdraw() {
-    const product = document.getElementById("productList").value;
+// Função para registrar solicitação
+function registerRequest() {
+    const productSearch = document.getElementById("searchProduct").value.toLowerCase();
     const person = document.getElementById("personList").value;
-    const quantity = document.getElementById("withdrawQuantity").value;
+    const quantity = document.getElementById("requestQuantity").value;
     const date = new Date().toLocaleString();
 
+    const products = getLocalStorageData('products') || [];
+    const product = products.find(p => p.name.toLowerCase().includes(productSearch) || p.code.toLowerCase().includes(productSearch));
+
     if (product && person && quantity) {
-        const withdrawals = getLocalStorageData('withdrawals') || [];
-        withdrawals.push({ product, person, quantity: parseInt(quantity), date });
-        setLocalStorageData('withdrawals', withdrawals);
-        alert("Retirada registrada com sucesso!");
-        clearInputFields(['withdrawQuantity']);
+        const requests = getLocalStorageData('requests') || [];
+        requests.push({ product: product.name, person, quantity, date });
+        setLocalStorageData('requests', requests);
+        alert("Solicitação registrada com sucesso!");
+        clearInputFields(['searchProduct', 'requestQuantity']);
+        updateRequestTable(); // Atualiza a tabela de solicitações após adicionar
     } else {
-        alert("Preencha todos os campos para registrar a retirada.");
+        alert("Verifique os campos e tente novamente.");
     }
 }
 
-// Função para exportar dados para Excel
-function exportToExcel() {
-    const withdrawals = getLocalStorageData('withdrawals') || [];
-    let csvContent = "data:text/csv;charset=utf-8,";
-    csvContent += "Produto,Pessoa,Quantidade,Data\n";
+// Função para exibir solicitações na tabela
+function updateRequestTable() {
+    const requests = getLocalStorageData('requests') || [];
+    const requestTableBody = document.getElementById("requestTable").getElementsByTagName('tbody')[0];
+    requestTableBody.innerHTML = ''; // Limpa a tabela
 
-    withdrawals.forEach(row => {
-        csvContent += `${row.product},${row.person},${row.quantity},${row.date}\n`;
+    requests.forEach(request => {
+        const row = requestTableBody.insertRow();
+        row.insertCell(0).innerText = request.product;
+        row.insertCell(1).innerText = request.person;
+        row.insertCell(2).innerText = request.quantity;
+        row.insertCell(3).innerText = request.date;
     });
-
-    const encodedUri = encodeURI(csvContent);
-    const link = document.createElement("a");
-    link.setAttribute("href", encodedUri);
-    link.setAttribute("download", "registro_estoque.csv");
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
 }
 
-// Função para carregar dados do localStorage ao iniciar o sistema
-function loadDataFromLocalStorage() {
-    updateProductList();
-    updatePersonList();
+// Função para gerar relatório
+function generateReport(period) {
+    const requests = getLocalStorageData('requests') || [];
+    const now = new Date();
+    let filteredRequests = [];
+
+    if (period === 'week') {
+        const lastWeek = new Date();
+        lastWeek.setDate(now.getDate() - 7);
+        filteredRequests = requests.filter(request => new Date(request.date) >= lastWeek);
+    } else if (period === 'month') {
+        const lastMonth = new Date();
+        lastMonth.setMonth(now.getMonth() - 1);
+        filteredRequests = requests.filter(request => new Date(request.date) >= lastMonth);
+    }
+
+    const reportResultsDiv = document.getElementById("reportResults");
+    reportResultsDiv.innerHTML = '';
+
+    if (filteredRequests.length > 0) {
+        filteredRequests.forEach(request => {
+            const div = document.createElement('div');
+            div.innerText = `Produto: ${request.product}, Pessoa: ${request.person}, Quantidade: ${request.quantity}, Data: ${request.date}`;
+            reportResultsDiv.appendChild(div);
+        });
+    } else {
+        reportResultsDiv.innerText = 'Nenhuma solicitação encontrada para o período.';
+    }
 }
 
-// Função para obter dados do localStorage
+// Funções utilitárias para manipulação do localStorage
 function getLocalStorageData(key) {
-    const data = localStorage.getItem(key);
-    return data ? JSON.parse(data) : null;
+    return JSON.parse(localStorage.getItem(key));
 }
 
-// Função para salvar dados no localStorage
 function setLocalStorageData(key, data) {
     localStorage.setItem(key, JSON.stringify(data));
 }
 
-// Função para limpar campos de entrada
-function clearInputFields(fields) {
-    fields.forEach(field => document.getElementById(field).value = '');
+function clearInputFields(ids) {
+    ids.forEach(id => {
+        document.getElementById(id).value = '';
+    });
 }
 
-// Carregar dados do localStorage ao carregar a página
-window.onload = loadDataFromLocalStorage;
+// Carregar dados iniciais ao fazer login
+function loadDataFromLocalStorage() {
+    updateProductTable();
+    updatePersonList();
+    updateRequestTable();
+}
+
