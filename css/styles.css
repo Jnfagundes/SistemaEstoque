@@ -30,3 +30,17 @@ input{
     width: 255px;
     height: 25px;
 }
+
+#consultas{
+    margin: auto;
+    width: 750px;
+    display: flex;
+    flex-direction: column;
+    margin-top: 100px;
+    align-items: center;
+    
+}
+
+#cadastrarProduto{
+    border: solid 1px wheat;
+}

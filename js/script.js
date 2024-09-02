@@ -18,3 +18,8 @@ function login(){
         alert("Usuário ou senha incorretos.");
     }
 };
+
+//função para cadastrar produtos
+function cadastrar(){
+    
+}

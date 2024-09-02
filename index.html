@@ -17,8 +17,26 @@
         <button onclick="login()">Entrar</button>
 
     </section>
-    <section id="consultas">
-        <h1>Consulta de produto em estoque</h1>
+    <section id="consultas" style="display: none;">
+        
+        <div id="cadastrarProduto">
+            <h1>Consulta de produto em estoque</h1>
+            <label for="produto" style="color:white; margin-left: 10px;">Produto: </label>
+            <input type="text" id="produto" placeholder="Digite qual produto deseja cadastrar">
+            <label for="codProduto" style="color:white; margin-left: 10px;">Código: </label>
+            <input type="text" id="codProduto" placeholder="Digite o código do produto">
+            <label for="descricao" style="color:white; margin-left: 10px;">Descrição: </label>
+            <input type="text" id="descricao" placeholder="Descreva o produto em um pequeno texto">
+            <label for="dataCadastro" style="color:white; margin-left: 10px;">Data</label>
+            <input type="date" id="dataCadastro" placeholder="Digite a data da entrada">
+
+            <button id="cadastro" onclick="cadastar()" style=" margin: 10px; ">Cadastar item</button>
+
+        </div>
+        <div id="produtos">
+
+        </div>
+        <h1>Consultas de pedidos</h1>
     </section>
 
 
