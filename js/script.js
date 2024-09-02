@@ -21,5 +21,6 @@ function login(){
 
 //função para cadastrar produtos
 function cadastrar(){
-    
+
 }
+

@@ -14,12 +14,12 @@
         <h1>Entre com usuário e senha</h1>
         <input type="text" id="usuario" placeholder="Digite o usuário do sistema">
         <input type="password" id="senha" placeholder="Digite senha">
-        <button onclick="login()">Entrar</button>
+        <button onclick="login()" >Entrar</button>
 
     </section>
     <section id="consultas" style="display: none;">
         
-        <div id="cadastrarProduto">
+        <div id="cadastrarProduto" class="campos">
             <h1>Consulta de produto em estoque</h1>
             <label for="produto" style="color:white; margin-left: 10px;">Produto: </label>
             <input type="text" id="produto" placeholder="Digite qual produto deseja cadastrar">
@@ -33,10 +33,10 @@
             <button id="cadastro" onclick="cadastar()" style=" margin: 10px; ">Cadastar item</button>
 
         </div>
-        <div id="produtos">
-
+        <div id="produtos" class="campos">
+            <h1>Consultas de pedidos</h1>
         </div>
-        <h1>Consultas de pedidos</h1>
+        
     </section>
 
 

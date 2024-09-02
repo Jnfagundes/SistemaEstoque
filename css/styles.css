@@ -23,6 +23,7 @@ header{
 h1{
     color: wheat;
     font-size: 2.5em;
+    margin: 10px;
 }
 
 input{
@@ -41,6 +42,7 @@ input{
     
 }
 
-#cadastrarProduto{
+.campos{
     border: solid 1px wheat;
+    margin-bottom: 50px;
 }
